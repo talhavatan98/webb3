@@ -1,0 +1,200 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  --background: #FDFBD4;
+  --text: #000000;
+}
+
+[data-theme='dark'] {
+  --background: #BAE6FC;
+  --text: #000000;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  transition: background-color 0.5s ease;
+}
+
+/* Dark mode styles */
+.dark body {
+  background-color: #BAE6FC;
+  color: #000000;
+}
+
+.hero {
+  background: linear-gradient(to right, #0ea5e9, #6366f1);
+  color: white;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+button {
+  background-color: #0ea5e9;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #6366f1;
+}
+
+.card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
+}
+
+.dark .card {
+  background-color: #a3d9fa;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  transition: all 0.5s ease;
+}
+
+.dark .card-header {
+  background-color: #8cd3f9;
+  border-bottom-color: #404040;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+.badge {
+  background-color: #0ea5e9;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* Navigation styles */
+.nav-link {
+  position: relative;
+  color: var(--text);
+  opacity: 1 !important;
+  font-weight: 600;
+}
+
+.nav-link:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #0ea5e9;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover:after {
+  width: 100%;
+}
+
+/* Search bar animation */
+.search-bar {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.search-bar.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Dark mode toggle transition */
+.theme-transition {
+  transition: background-color 0.5s ease;
+}
+
+/* Dropdown menu animation */
+.dropdown-menu {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dropdown-menu.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Focus styles for better accessibility */
+:focus {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar for better dark mode experience */
+.dark ::-webkit-scrollbar {
+  width: 12px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #a3d9fa;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+  border-radius: 6px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #5a5a5a;
+}
+
+/* Selection color */
+::selection {
+  background-color: #0ea5e9;
+  color: white;
+}
+
+.dark ::selection {
+  background-color: #6366f1;
+  color: white;
+}
+
+/* Ensure text visibility */
+.nav-text {
+  opacity: 1 !important;
+  color: #000000 !important;
+  font-weight: 600 !important;
+  transition: none !important;
+}
+
+/* Remove all transitions from text */
+* {
+  transition: background-color 0.5s ease;
+}
+
+/* Force text visibility */
+a, button, span, p, h1, h2, h3, h4, h5, h6 {
+  opacity: 1 !important;
+}
