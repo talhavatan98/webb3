@@ -35,10 +35,10 @@ export function BlogCategoriesFilter({
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold mb-4">Blog Categories</h2>
-        <div className="flex flex-wrap gap-2">
+    <div className="space-y-8">
+      <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <h2 className="text-2xl font-bold mb-4 text-gray-900">Blog Categories</h2>
+        <div className="flex flex-wrap gap-3">
           {blogCategories.map((category) => (
             <Badge 
               key={category.id}
@@ -52,11 +52,11 @@ export function BlogCategoriesFilter({
       </div>
 
       {activeCategory && (
-        <div>
-          <h3 className="text-xl font-semibold mb-3">
+        <div className="bg-gray-50 rounded-xl shadow-sm p-6 border border-gray-100">
+          <h3 className="text-xl font-semibold mb-4 text-gray-800">
             {blogCategories.find(cat => cat.id === activeCategory)?.name} Topics
           </h3>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {blogCategories
               .find(cat => cat.id === activeCategory)
               ?.subcategories.map((subcategory) => (

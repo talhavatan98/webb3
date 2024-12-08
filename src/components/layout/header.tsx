@@ -11,6 +11,7 @@ export function Header() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showBlogDropdown, setShowBlogDropdown] = useState(false);
+  const [showHealthQuizDropdown, setShowHealthQuizDropdown] = useState(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -84,7 +85,28 @@ export function Header() {
               <li><a href="#" className="px-3 py-2 rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">Diet Recipes</a></li>
               <li><a href="#" className="px-3 py-2 rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">Health Routines</a></li>
               <li><a href="#" className="px-3 py-2 rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">Podcast</a></li>
-              <li><a href="#" className="px-3 py-2 rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">Health Quiz</a></li>
+              <li className="relative group">
+                <button
+                  onMouseEnter={() => setShowHealthQuizDropdown(true)}
+                  onMouseLeave={() => setShowHealthQuizDropdown(false)}
+                  className="inline-flex items-center px-3 py-2 rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold"
+                >
+                  Health Quiz
+                  <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                  {showHealthQuizDropdown && (
+                    <div className="absolute top-full left-0 w-64 bg-[#0ba5e9] bg-opacity-90 backdrop-blur-sm shadow-lg rounded-md py-2 mt-1">
+                      <Link
+                        href="/health-quiz/biohacking-profile"
+                        className="block px-4 py-2 text-sm hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-semibold"
+                      >
+                        Biohacking Profile Quiz
+                      </Link>
+                    </div>
+                  )}
+                </button>
+              </li>
               <li><a href="#" className="px-3 py-2 rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">Contact Us</a></li>
               <li><a href="#" className="px-3 py-2 rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">Free Tools for Goals</a></li>
             </ul>

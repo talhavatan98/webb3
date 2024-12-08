@@ -8,12 +8,12 @@ interface BadgeProps {
 }
 
 export default function Badge({ children, className = '', onClick, variant = 'default' }: BadgeProps) {
-  const baseStyles = 'py-1 px-2 rounded cursor-pointer transition-all';
+  const baseStyles = 'py-2 px-4 rounded-lg cursor-pointer transition-all duration-200 font-medium';
   
   const variantStyles = {
-    default: 'bg-blue-500 text-white hover:bg-blue-600',
-    secondary: 'bg-gray-100 text-gray-700 hover:bg-gray-200',
-    outline: 'border border-gray-200 bg-transparent hover:bg-gray-100'
+    default: 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm',
+    secondary: 'bg-gray-100 text-gray-800 hover:bg-gray-200 border border-gray-200',
+    outline: 'border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 bg-white'
   };
 
   return (

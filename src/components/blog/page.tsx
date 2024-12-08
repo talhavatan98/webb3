@@ -42,18 +42,29 @@ export function BlogPage() {
         {/* Main content area */}
         <div className="lg:col-span-6">
           <div className="space-y-8">
-            <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-2xl font-bold mb-4">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+              <h2 className="text-2xl font-bold mb-4 text-gray-900">
                 {getSelectedCategoryName()}
               </h2>
-              <div className="space-y-4">
-                {/* Placeholder for filtered blog posts */}
-                <p className="text-gray-600">
-                  {selectedCategory 
-                    ? `Showing posts for ${getSelectedCategoryName()}`
-                    : 'Showing all blog posts'}
-                </p>
-                {/* Blog posts will be rendered here */}
+              <div className="space-y-6">
+                {/* Blog post cards */}
+                {[1, 2, 3].map((post) => (
+                  <div 
+                    key={post} 
+                    className="bg-gray-50 rounded-lg p-6 border border-gray-100 hover:border-indigo-200 transition-colors duration-200"
+                  >
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      Sample Blog Post {post}
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      This is a sample blog post description that would be filtered based on the selected category 
+                      ({selectedCategory || 'none'}) and tag ({selectedTag || 'none'}).
+                    </p>
+                    <div className="flex gap-2">
+                      <span className="text-sm text-indigo-600">Read more →</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -61,13 +72,13 @@ export function BlogPage() {
 
         {/* Right sidebar */}
         <div className="lg:col-span-3 space-y-8">
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
             <PopularBlogs />
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
             <Author />
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
             <FurtherReading />
           </div>
         </div>

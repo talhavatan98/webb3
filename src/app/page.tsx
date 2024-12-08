@@ -7,12 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { BlogCategoriesFilter } from '../components/blog/blog-categories-filter'
 import Badge from '../components/ui/badge'
 import Image from 'next/image'
+import { blogCategories } from '../lib/blog-categories'
 
 const blogPosts = [
   {
     id: 1,
     category: 'innovative-medicine',
-    tags: ['advanced-herbal-therapeutics', 'marine-based-medicine'],
+    tags: ['herbal-cures', 'marine-therapies'],
     title: 'Latest Breakthroughs in Medical Technology',
     excerpt: 'Explore cutting-edge innovations revolutionizing modern healthcare and treatment approaches.',
     readTime: '9 Min Read',
@@ -20,8 +21,8 @@ const blogPosts = [
   },
   {
     id: 2,
-    category: 'health-by-gender',
-    tags: ['testosterone-hormone-optimization', 'male-nutrition'],
+    category: 'womens-health',
+    tags: ['womens-nutrition', 'womens-fitness'],
     title: 'Gender-Specific Health Optimization',
     excerpt: 'Understanding unique health needs and optimization strategies based on biological factors.',
     readTime: '7 Min Read',
@@ -30,7 +31,7 @@ const blogPosts = [
   {
     id: 3,
     category: 'smart-supplements',
-    tags: ['essential-supplements', 'sports-performance'],
+    tags: ['essential-nutrients', 'sports-boosters'],
     title: 'Advanced Supplementation Strategies',
     excerpt: 'Discover intelligent approaches to supplementation for optimal health and performance.',
     readTime: '8 Min Read',
@@ -39,7 +40,7 @@ const blogPosts = [
   {
     id: 4,
     category: 'mind-wellness',
-    tags: ['stress-management', 'sleep-optimization'],
+    tags: ['stress-hacks', 'mental-tech'],
     title: 'Modern Approaches to Mental Health',
     excerpt: 'Innovative techniques and strategies for maintaining optimal mental well-being.',
     readTime: '6 Min Read',
@@ -47,8 +48,8 @@ const blogPosts = [
   },
   {
     id: 5,
-    category: 'smart-fitness-recovery',
-    tags: ['home-exercise', 'functional-training'],
+    category: 'fitness-recovery',
+    tags: ['functional-fitness', 'home-workouts'],
     title: 'Next-Gen Fitness Technologies',
     excerpt: 'How smart devices and AI are transforming workout efficiency and recovery protocols.',
     readTime: '10 Min Read',
@@ -56,8 +57,8 @@ const blogPosts = [
   },
   {
     id: 6,
-    category: 'natural-skin-hair-health',
-    tags: ['anti-aging', 'hair-growth'],
+    category: 'skin-hair',
+    tags: ['anti-aging', 'natural-beauty'],
     title: 'Natural Beauty Enhancement',
     excerpt: 'Evidence-based natural approaches to skin and hair care for lasting health and beauty.',
     readTime: '8 Min Read',
@@ -66,12 +67,27 @@ const blogPosts = [
 ]
 
 export default function Home() {
-  const [filteredPosts, setFilteredPosts] = useState(blogPosts)
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [filteredPosts, setFilteredPosts] = useState(blogPosts);
 
-  const handleTagSelect = (tag: string) => {
-    const filtered = blogPosts.filter(post => post.tags.includes(tag))
-    setFilteredPosts(filtered)
+  const handleTagSelect = (tag: string | null) => {
+    setSelectedTag(tag);
+    if (tag) {
+      const filtered = blogPosts.filter(post => post.tags.includes(tag));
+      setFilteredPosts(filtered);
+    } else {
+      setFilteredPosts(blogPosts);
+    }
   }
+
+  // Helper function to get tag name from ID
+  const getTagName = (tagId: string) => {
+    for (const category of blogCategories) {
+      const subcategory = category.subcategories.find(sub => sub.id === tagId);
+      if (subcategory) return subcategory.name;
+    }
+    return tagId;
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -105,7 +121,10 @@ export default function Home() {
       <main className="flex-grow container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
-            <BlogCategoriesFilter onTagSelect={handleTagSelect} />
+            <BlogCategoriesFilter 
+              onTagSelect={handleTagSelect}
+              onCategorySelect={() => {}} // We're focusing on tag filtering for now
+            />
           </div>
           <div className="md:col-span-2">
             <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center">
@@ -119,10 +138,15 @@ export default function Home() {
                     <div className="h-48 bg-gradient-to-r from-sky-100 to-indigo-100"></div>
                   </CardHeader>
                   <CardContent className="p-6">
-                    <div className="flex gap-2 mb-2">
+                    <div className="flex flex-wrap gap-2 mb-2">
                       {post.tags.map(tag => (
-                        <Badge key={tag} className="bg-sky-100 text-sky-700">
-                          {tag}
+                        <Badge 
+                          key={tag} 
+                          variant={selectedTag === tag ? "default" : "outline"}
+                          onClick={() => handleTagSelect(tag)}
+                          className="cursor-pointer"
+                        >
+                          {getTagName(tag)}
                         </Badge>
                       ))}
                     </div>
@@ -136,6 +160,11 @@ export default function Home() {
                 </Card>
               ))}
             </div>
+            {filteredPosts.length === 0 && (
+              <div className="text-center py-8">
+                <p className="text-gray-600">No articles found for the selected topic.</p>
+              </div>
+            )}
           </div>
         </div>
       </main>
