@@ -1,6 +1,6 @@
 import './globals.css'
-import { Header } from '@/components/layout/header'
-import { Footer } from '@/components/layout/footer'
+import { Header } from '../components/layout/header'
+import { Footer } from '../components/layout/footer'
 
 export default function RootLayout({
   children,
@@ -15,7 +15,7 @@ export default function RootLayout({
           content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:;"
         />
       </head>
-      <body suppressHydrationWarning className="min-h-screen bg-[#FDFBD4] dark:bg-[#2D1B69] transition-all duration-500">
+      <body suppressHydrationWarning className="min-h-screen bg-[#BAE6FC] dark:bg-[#2C1B69] transition-all duration-500">
         <div className="flex flex-col min-h-screen">
           <Header />
           <main className="flex-grow">
@@ -39,7 +39,7 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#FDFBD4' },
-    { media: '(prefers-color-scheme: dark)', color: '#2D1B69' }
+    { media: '(prefers-color-scheme: light)', color: '#BAE6FC' },
+    { media: '(prefers-color-scheme: dark)', color: '#2C1B69' }
   ]
 }

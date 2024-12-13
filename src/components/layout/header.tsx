@@ -1,10 +1,15 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from "react";
-import { cn } from "src/lib/utils";
+import { cn } from "../../lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { blogCategories } from "../../lib/blog-categories";
+
+interface BlogCategory {
+  id: string;
+  name: string;
+}
 
 export function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -12,6 +17,8 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showBlogDropdown, setShowBlogDropdown] = useState(false);
   const [showHealthQuizDropdown, setShowHealthQuizDropdown] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [headerKey, setHeaderKey] = useState(0);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -37,10 +44,11 @@ export function Header() {
     } else {
       document.documentElement.classList.remove('dark');
     }
+    setHeaderKey(prevKey => prevKey + 1);
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#0ba5e9] bg-opacity-90 backdrop-blur-sm shadow-md transition-all duration-300 ease-in-out">
+    <header key={headerKey} className="sticky top-0 z-50 w-full bg-[#0ba5e9] bg-opacity-90 backdrop-blur-sm shadow-md transition-all duration-300 ease-in-out">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 mr-4">
@@ -55,7 +63,27 @@ export function Header() {
               />
             </Link>
           </div>
-          <nav className="flex-1">
+
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-opacity-20 hover:bg-white"
+            aria-expanded="false"
+          >
+            <span className="sr-only">Open main menu</span>
+            {!isMobileMenuOpen ? (
+              <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            ) : (
+              <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            )}
+          </button>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex flex-1">
             <ul className="flex items-center justify-center space-x-4 text-white">
               <li className="relative group">
                 <button
@@ -69,7 +97,7 @@ export function Header() {
                   </svg>
                   {showBlogDropdown && (
                     <div className="absolute top-full left-0 w-64 bg-[#0ba5e9] bg-opacity-90 backdrop-blur-sm shadow-lg rounded-md py-2 mt-1">
-                      {blogCategories.map((category) => (
+                      {blogCategories.map((category: BlogCategory) => (
                         <Link
                           key={category.id}
                           href={`/blog/${category.id}`}
@@ -107,7 +135,14 @@ export function Header() {
                   )}
                 </button>
               </li>
-              <li><a href="#" className="px-3 py-2 rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">Contact Us</a></li>
+              <li>
+                <Link 
+                  href="/contact" 
+                  className="px-3 py-2 rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold"
+                >
+                  Contact Us
+                </Link>
+              </li>
               <li><a href="#" className="px-3 py-2 rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">Free Tools for Goals</a></li>
             </ul>
           </nav>
@@ -173,6 +208,67 @@ export function Header() {
             </button>
           </div>
         </div>
+
+        {/* Mobile Navigation */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-[#0ba5e9] bg-opacity-90 backdrop-blur-sm">
+              <button
+                onClick={() => setShowBlogDropdown(!showBlogDropdown)}
+                className="w-full text-left px-3 py-2 text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold"
+              >
+                Blogs
+              </button>
+              {showBlogDropdown && (
+                <div className="pl-6 space-y-1">
+                  {blogCategories.map((category: BlogCategory) => (
+                    <Link
+                      key={category.id}
+                      href={`/blog/${category.id}`}
+                      className="block px-3 py-2 text-white text-sm hover:bg-opacity-20 hover:bg-white transition-colors duration-300"
+                    >
+                      {category.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              <a href="#" className="block px-3 py-2 text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">
+                Diet Recipes
+              </a>
+              <a href="#" className="block px-3 py-2 text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">
+                Health Routines
+              </a>
+              <a href="#" className="block px-3 py-2 text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">
+                Podcast
+              </a>
+              <button
+                onClick={() => setShowHealthQuizDropdown(!showHealthQuizDropdown)}
+                className="w-full text-left px-3 py-2 text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold"
+              >
+                Health Quiz
+              </button>
+              {showHealthQuizDropdown && (
+                <div className="pl-6">
+                  <Link
+                    href="/health-quiz/biohacking-profile"
+                    className="block px-3 py-2 text-white text-sm hover:bg-opacity-20 hover:bg-white transition-colors duration-300"
+                  >
+                    Biohacking Profile Quiz
+                  </Link>
+                </div>
+              )}
+              <Link
+                href="/contact"
+                className="block px-3 py-2 text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold"
+              >
+                Contact Us
+              </Link>
+              <a href="#" className="block px-3 py-2 text-white rounded-md hover:bg-opacity-20 hover:bg-white transition-colors duration-300 font-bold">
+                Free Tools for Goals
+              </a>
+            </div>
+          </div>
+        )}
 
         {isSearchVisible && (
           <div className="py-4 border-t border-white border-opacity-20">

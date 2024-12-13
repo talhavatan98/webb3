@@ -3,13 +3,13 @@
 @import 'tailwindcss/utilities';
 
 :root {
-  --background: #FDFBD4;
+  --background: #BAE6FC;
   --text: #000000;
 }
 
 [data-theme='dark'] {
-  --background: #BAE6FC;
-  --text: #000000;
+  --background: #2C1B69;
+  --text: #ffffff;
 }
 
 body {
@@ -20,8 +20,8 @@ body {
 
 /* Dark mode styles */
 .dark body {
-  background-color: #BAE6FC;
-  color: #000000;
+  background-color: #2C1B69;
+  color: #ffffff;
 }
 
 .hero {
